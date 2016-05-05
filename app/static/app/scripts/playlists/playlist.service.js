@@ -96,6 +96,30 @@ angular.module('mango')
 
 	      return deferred.promise;
 	    },
+	    addColaborator : function (playlistId, userId, callback) {
+	      var cb = callback || angular.noop,
+	          deferred = $q.defer();
+
+	      $http.post('api/playlists/' + playlistId + '/collaborators', {
+	      	user: userId
+	      })
+	      .success(function (res) {
+	        var playlist = res.playlist;
+
+	        $timeout(function () {
+	          deferred.resolve(playlist);
+	        }, 300);
+
+	        return cb(playlist);
+	      })
+	      .error(function (err) {
+	        deferred.reject(err);
+
+	        return cb(err);
+	      }.bind(this));
+
+	      return deferred.promise;
+	    },
 	    editPlaylist : function (playlistId, name, is_public, callback) {
 	      var cb = callback || angular.noop,
 	          deferred = $q.defer();

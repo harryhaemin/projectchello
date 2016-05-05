@@ -19,7 +19,9 @@
                 <section class="users">
                   <div user-item 
                     data-user="user" 
-                    ng-repeat="user in users">
+                    ng-repeat="user in users"
+                    ng-click="selectUser(user.id)"
+                    >
                   </div>
                   <div ng-if="users.length === 0">No user to display</div>
                 </section>

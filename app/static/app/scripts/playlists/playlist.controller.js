@@ -8,6 +8,17 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 
 		$scope.getCurrentUser = Auth.getCurrentUser;
 
+		$scope.addColaborator = function(userId){
+			Playlists.addColaborator($stateParams.playlistId, userId)
+			.then(function(playlist) {
+				$location.path('playlists/' + playlist.id);
+			},
+			function(err) {
+				// console.log(err.message);
+				$scope.error = err.message;
+			});
+		};
+
 		$scope.select = function(selected) {
 			if (selected == 'youtube') {
 				$scope.youtubeSelected = true;
@@ -323,10 +334,9 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 	  		});
     };
 
-    $scope.selectUser = function(song) {
+    $scope.selectUser = function(user) {
     	// $modalInstance.close($scope.select.song);
-    	console.log(song);
-    	$scope.addSongs(song);
+    	$scope.addColaborator(user);
 
     }
 }]);
