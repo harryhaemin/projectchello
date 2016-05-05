@@ -190,7 +190,7 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
     };
 
     $scope.openModal = function() {
-			$modal.open({
+	$modal.open({
         templateUrl: 'app/views/playlists/add_modal.html',
         controller: 'PlaylistModalController',
         size: 'md',
@@ -227,27 +227,68 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 	}
 ])
 .controller('PlaylistModalController', ['$scope', '$stateParams', '$modalInstance', 'Songs', '$state',
-  function($scope, $stateParams, $modalInstance, Songs, $state) {
+ 
+  function($scope, $stateParams, $modalInstance, SearchService) {
+  	console.log("in playlist controller");
     $scope.q = $stateParams.q;
     $scope.type = $stateParams.type;
+    $scope.youtubeSelected = true;
 
     $scope.busy = false;
-    $scope.select = {};
-    // $scope.selectedSongs = [];
 
-    $scope.getSongs = function() {
-			Songs.getSongsForSelect()
-      .then(function (songs) {
-      	$scope.songs = songs;
+    $scope.youtube = null;
+    $scope.soundcloud = null;
+
+    $scope.searchSong = function() {
+      console.log("searching motherfucker!!!");
+      $scope.youtube = null;
+      $scope.soundcloud = null;
+      SearchService.searchYoutube($scope.q)
+      .then(function(res) {
+        $scope.youtube = res;
       });
-		}
+      SearchService.searchSoundcloud($scope.q)
+      .then(function(res) {
+        $scope.soundcloud = res;
+      });
+    };
 
-    $scope.addSongs = function() {
-    	$modalInstance.close($scope.select.songs);
+    $scope.select = function(selected) {
+			if (selected == 'youtube') {
+				$scope.youtubeSelected = true;
+			}
+			else {
+				$scope.youtubeSelected = false;
+			}
+		};
+
+    $scope.setSong = function(song) {
+    	$modalInstance.close(song);
     }
 
-    $scope.redirectToAdd = function() {
-    	$modalInstance.dismiss();
-    	$state.go('createSong');
-    }
+
+ //  function($scope, $stateParams, $modalInstance, Songs, $state) {
+ //    $scope.q = $stateParams.q;
+ //    $scope.type = $stateParams.type;
+
+ //    $scope.busy = false;
+ //    $scope.select = {};
+ //    // $scope.selectedSongs = [];
+
+ //    $scope.getSongs = function() {
+		
+	//   // Songs.getSongsForSelect()
+ //   //    .then(function (songs) {
+ //   //    	$scope.songs = songs;
+ //   //    });
+	// }
+
+ //    $scope.addSongs = function() {
+ //    	$modalInstance.close($scope.select.songs);
+ //    }
+
+ //    $scope.redirectToAdd = function() {
+ //    	$modalInstance.dismiss();
+ //    	$state.go('createSong');
+ //    }
 }]);

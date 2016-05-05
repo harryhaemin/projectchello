@@ -1,4 +1,4 @@
-<div id="search-modal" class="row" style="margin: 10px 0;" ng-init="getSongs()"> 
+<div id="search-modal" class="row" style="margin: 10px 0;"> 
   <div class="col-md-12">
     <button class="pull-right btn btn-danger" id="close-modal" ng-click="$dismiss()">Close</button>
     <div>
@@ -6,26 +6,116 @@
         Add Songs
       </h2>
       <div id="search-container">  
-        <form role="form" id="form-horizontal" ng-submit="addSongs()">
+        <form role="form" id="form-horizontal">
           <div class="row">
-            <div class="col-md-8" ng-if="songs">
-              <ui-select multiple ng-model="select.songs" theme="select2">
-                <ui-select-match placeholder="Select songs...">{{$item.title}}</ui-select-match>
-                <ui-select-choices repeat="a in songs | propsFilter: {title: $select.search} track by a.id">
-                  <div>{{a.title}} by <span ng-repeat="artist in a.artists">{{ artist.name }}<span ng-if="!$last">, </span></span></div>
-                </ui-select-choices>
-              </ui-select>
+            <div class="col-md-8">
+              
+               
+               <div id="search-container" class="ng-scope">  
+        <form role="form" id="search-input-form" class="ng-pristine ng-valid" ng-submit="searchSong()">
+          <div class="col-md-7 col-sm-8 col-xs-9" style="padding-left: 0;">
+            <input class="form-control ng-pristine ng-untouched ng-valid" id="search-query" type="text" ng-model="q" placeholder="Search...">
+          </div>
+          <button type="submit" id="search-btn" class="btn btn-primary col-md-5 col-sm-4 col-xs-3">Search</button>
+        </form>
+        
+        <div id="search-results"> 
+          <ul class="search-selector">
+            <li class="youtube col-md-6 col-sm-6 col-xs-6" ng-click="select('youtube')" ng-class="{active: youtubeSelected}">
+              Youtube
+            </li>
+            <li class="soundcloud col-md-6 col-sm-6 col-xs-6" ng-click="select('soundcloud')" ng-class="{active: !youtubeSelected}">
+              Soundcloud
+            </li>
+          </ul>
+          <div ng-if="error && error.message" ng-class="{active: !youtubeSelected}">
+            {{ error.message }}
+          </div>
+          <section class="song-search-results-summary" ng-if="!busy && youtubeSelected">
+            <section class="song-search-results-body">
+
+              <div class="song-search-result" ng-repeat="song in youtube | limitTo:20" ng-click="setSong(song)">
+                <div class="song-thumbnail sm">
+                  <img ng-src="{{ song.thumbnail }}">
+                  <div class="song-duration">
+                    {{ song.duration | secondsToDateTime | date:'m:ss' }}
+                  </div>
+                </div>
+
+                <ul class="info">
+                  <li>
+                    <strong class="song-name">
+                      {{ song.title }}
+                    </strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div ng-if="busy">
+                Loading songs
+              </div>
+
+              <div class="no-results" ng-if="youtube && youtube.length == 0">
+                No results
+              </div>
+
+            </section>
+          </section>
+          <section class="song-search-results-summary" ng-if="!busy && !youtubeSelected">
+            <section class="song-search-results-body">
+
+              <div class="song-search-result" ng-repeat="song in soundcloud | limitTo:20" ng-click="setSong(song)">
+                <div class="song-thumbnail sm">
+                  <img ng-src="{{ song.thumbnail }}">
+                  <div class="song-duration">
+                    {{ song.duration | secondsToDateTime | date:'m:ss' }}
+                  </div>
+                </div>
+
+                <ul class="info">
+                  <li>
+                    <strong class="song-name">
+                      {{ song.title }}
+                    </strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div ng-if="busy">
+                Loading songs
+              </div>
+
+              <div class="no-results" ng-if="soundcloud && soundcloud.length == 0">
+                No results
+              </div>
+
+            </section>
+          </section>
+        </div>
+      </div>
+
+
+
+
+
+               <!-- <form class="navbar-form search-form" role="search" ng-submit="searchSong()">
+                <div class="form-group">
+                  <input type="search" 
+                        id="search_q" 
+                        name="q" 
+                        ng-model="q"
+                        class="form-control" 
+                        placeholder="Search youtube and soundcloud">
+
+                  <button type="submit">
+                    <i class="glyphicon glyphicon-search" style="font-size:20px;"></i>
+                  </button>
+                 </div>
+               </form> -->
             </div>
-            <div class="col-md-8" ng-if="!songs">
-              Loading songs
-            </div>
+
             <div class="col-md-4">
               Song not found?<br /><a ng-click="redirectToAdd()">Add song</a>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 20px;">
-            <div class="col-md-3 col-md-offset-9">
-              <button ng-click="addSongs()" type="submit" id="search-btn" class="btn btn-primary col-md-12">Add</button>
             </div>
           </div>
         </form>
