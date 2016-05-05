@@ -313,8 +313,6 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
     $scope.soundcloud = null;
     $scope.users = [];
 
-    console.log("yoyoyoy");
-
     $scope.search = function() {
       console.log("searching motherfucker!!!");
       Users.getUsers($stateParams.userId)
@@ -325,16 +323,7 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 	  		});
     };
 
-    $scope.select = function(selected) {
-			if (selected == 'youtube') {
-				$scope.youtubeSelected = true;
-			}
-			else {
-				$scope.youtubeSelected = false;
-			}
-	};
-
-    $scope.selectSong = function(song) {
+    $scope.selectUser = function(song) {
     	// $modalInstance.close($scope.select.song);
     	console.log(song);
     	$scope.addSongs(song);
