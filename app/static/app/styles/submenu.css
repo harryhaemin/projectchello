@@ -1,10 +1,10 @@
 .sidebar-nav {
   width: 100px;
-  background: #9ba070;
+  background: #0abcad;
   height: 100%;
   float: left;
   position: relative;
-  color: #fffef9;
+  color: #fff988;
   font-size: 16px; 
   font-weight: 400; 
   overflow:hidden; 
@@ -33,12 +33,12 @@
 .sidebar-nav ul.submenu li a, 
 .sidebar-nav ul.submenu li a:hover {
   text-decoration: none;
-  color: #fffef9;
+  color: #fff988;
 }
 
 .sidebar-nav ul.submenu li:hover,
 .sidebar-nav ul.submenu li.active {
-  background: #717350;
+  background: #138687;
 }
 
 .sidebar-nav .channel_menu {
@@ -55,7 +55,7 @@
   text-align: center;
   bottom: 0;
   width: 100%;
-  background: #717350;
+  background: #138687;
   padding: 15px 5px;
 }
 
@@ -66,8 +66,8 @@
 .sidebar-nav .logout_menu .logout {
   margin-top: 10px;
   font-size: 12px;
-  color: #fffef9;
-  background: #9ba070;
+  color: #0abcad;
+  background: #fff988;
   padding: 2px 7px;
   display:inline-block;
   cursor: pointer;

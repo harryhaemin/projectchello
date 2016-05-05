@@ -6,8 +6,6 @@
 			<div class="pull-left">{{ user.first_name }} {{ user.last_name }}</div>
 		  <div style="position:relative; margin-left: 20px; display: inline-block; font-size: 14px;">
         <span>{{ user.playlists.length }} playlists</span>
-        <a ui-sref="viewFollowers({userId: user.id})" style="margin-left:10px;">{{user.follower_count}} followers</a>
-        <a ui-sref="viewFollowing({userId: user.id})" style="margin-left:10px;">{{user.following_count}} following</a>
 		  </div>
       <div class="pull-right" ng-if="currentUser.username == user.username">
         <a class="btn btn-primary" ui-sref="createPlaylist">
