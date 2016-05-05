@@ -153,15 +153,15 @@ app.factory('PlayerService', ['$http', '$q', '$window', '$rootScope', '$timeout'
     var playSong = function(songIndex) {
       var song = playlist.songs[songIndex];
       if (song !== undefined) {
-        $http.post('api/remaining_playcount')
-        .success(function (res) {
-          $timeout(function () {
-              $rootScope.$apply(function () {
+        // $http.post('api/remaining_playcount')
+        // .success(function (res) {
+        //   $timeout(function () {
+        //       $rootScope.$apply(function () {
                   $rootScope.currentSong = song;
                   console.log(song);
                   $rootScope.playing = true;
-              });
-          }, 300);
+          //     });
+          // }, 300);
           if (song.source === 'soundcloud') {
             playSoundcloud(song);
             stopYoutube();
@@ -172,11 +172,11 @@ app.factory('PlayerService', ['$http', '$q', '$window', '$rootScope', '$timeout'
           }
           index = songIndex + 1;
           $rootScope.remaining_playcount = res.remaining_playcount;
-        }).error(function (err) {
-          console.log("in error");
-          console.log(err);
-          $rootScope.remaining_playcount = 0;
-        });
+        // }).error(function (err) {
+        //   console.log("in error");
+        //   console.log(err);
+        //   $rootScope.remaining_playcount = 0;
+        // });
       }
       else {
         $timeout(function () {
