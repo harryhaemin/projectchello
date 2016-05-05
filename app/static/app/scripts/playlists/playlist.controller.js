@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mango').controller('PlaylistController', ['$scope', '$stateParams', '$location', 'Playlists', 'PlayerService', 'SearchService', 'Songs', '$timeout', '$rootScope', 'Auth', '$modal', '$filter', '$state',
-	function($scope, $stateParams, $location, Playlists, PlayerService, SearchService, Songs, $timeout, $rootScope, Auth, $modal, $filter, $state) {
+angular.module('mango').controller('PlaylistController', ['$scope', '$stateParams', '$location', 'Playlists', 'PlayerService', 'SearchService', 'Users', 'Songs', '$timeout', '$rootScope', 'Auth', '$modal', '$filter', '$state',
+	function($scope, $stateParams, $location, Playlists, PlayerService, SearchService, Users, Songs, $timeout, $rootScope, Auth, $modal, $filter, $state) {
 		$scope.isPlaying = PlayerService.isPlaying;
 		$scope.isPaused = PlayerService.isPaused;
 		$scope.youtubeSelected = true;
@@ -204,6 +204,29 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
         // $scope.duration = $filter('date')($scope.duration, 'm:ss');
       });
 	}
+	 $scope.openColabModal = function() {
+		$modal.open({
+	        templateUrl: 'app/views/playlists/colab_modal.html',
+	        controller: 'ColabModalController',
+	        size: 'md',
+	        scope: $scope
+	      })
+      .result
+      .then(function (songs) {
+        $scope.songs = songs;
+        console.log( $scope.songs);
+        // $scope.duration = $filter('secondsToDateTime')(song.duration);
+        // $scope.duration = $filter('date')($scope.duration, 'm:ss');
+      });
+	}
+
+	$scope.isCollaborator = function() {
+		for (var i = 0; i < $scope.playlist.collaborators.length; i++) {
+			if ($scope.playlist.collaborators[i] == $scope.getCurrentUser().id)
+				return true;
+		}
+		return false;
+	}
 
 
     // $scope.currentUrl = null;
@@ -276,30 +299,45 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
     	$scope.addSongs(song);
 
     }
+}])
+.controller('ColabModalController', ['$scope', '$stateParams', '$modalInstance', 'Users', '$state',
+ 
+  function($scope, $stateParams, $modalInstance, Users) {
+    $scope.q = $stateParams.q;
+    $scope.type = $stateParams.type;
+    $scope.youtubeSelected = true;
 
+    $scope.busy = false;
 
- //  function($scope, $stateParams, $modalInstance, Songs, $state) {
- //    $scope.q = $stateParams.q;
- //    $scope.type = $stateParams.type;
+    $scope.youtube = null;
+    $scope.soundcloud = null;
+    $scope.users = [];
 
- //    $scope.busy = false;
- //    $scope.select = {};
- //    // $scope.selectedSongs = [];
+    console.log("yoyoyoy");
 
- //    $scope.getSongs = function() {
-		
-	//   // Songs.getSongsForSelect()
- //   //    .then(function (songs) {
- //   //    	$scope.songs = songs;
- //   //    });
-	// }
+    $scope.search = function() {
+      console.log("searching motherfucker!!!");
+      Users.getUsers($stateParams.userId)
+			.then(function(users) {
+				console.log(users);
+				$scope.users = users;
+			}, function(err) {
+	  		});
+    };
 
- //    $scope.addSongs = function() {
- //    	$modalInstance.close($scope.select.songs);
- //    }
+    $scope.select = function(selected) {
+			if (selected == 'youtube') {
+				$scope.youtubeSelected = true;
+			}
+			else {
+				$scope.youtubeSelected = false;
+			}
+	};
 
- //    $scope.redirectToAdd = function() {
- //    	$modalInstance.dismiss();
- //    	$state.go('createSong');
- //    }
+    $scope.selectSong = function(song) {
+    	// $modalInstance.close($scope.select.song);
+    	console.log(song);
+    	$scope.addSongs(song);
+
+    }
 }]);

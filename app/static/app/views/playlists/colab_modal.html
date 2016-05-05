@@ -1,0 +1,98 @@
+<div id="search-modal" class="row" style="margin: 10px 0;"> 
+  <div class="col-md-12">
+    <button class="pull-right btn btn-danger" id="close-modal" ng-click="$dismiss()">Close</button>
+    <div>
+      <h2 class="page-header">
+        Search users
+      </h2>
+      <div id="search-container" class="ng-scope">  
+        <form role="form" id="search-input-form" class="ng-pristine ng-valid" ng-submit="search()">
+          <div class="col-md-7 col-sm-8 col-xs-9" style="padding-left: 0;">
+            <input class="form-control ng-pristine ng-untouched ng-valid" id="search-query" type="text" ng-model="q" placeholder="Search...">
+          <button type="submit" id="search-btn" class="btn btn-primary col-md-5 col-sm-4 col-xs-3">Search</button>
+          </div>
+          
+        </form>
+        <div id="search-results"> 
+              <div id="users">
+                <div class="query-string" ng-if="query">Showing results for {{query}}:</div>
+                <section class="users">
+                  <div user-item 
+                    data-user="user" 
+                    ng-repeat="user in users">
+                  </div>
+                  <div ng-if="users.length === 0">No user to display</div>
+                </section>
+              </div>
+        </div>
+        
+        <!-- <div id="search-results"> 
+
+          <div ng-if="error && error.message" ng-class="{active: !youtubeSelected}">
+            {{ error.message }}
+          </div>
+          <section class="song-search-results-summary" ng-if="!busy && youtubeSelected">
+            <section class="song-search-results-body">
+
+              <div class="song-search-result" ng-repeat="song in youtube | limitTo:20" ng-click="selectSong(song)">
+                <div class="song-thumbnail sm">
+                  <img ng-src="{{ song.thumbnail }}">
+                  <div class="song-duration">
+                    {{ song.duration | secondsToDateTime | date:'m:ss' }}
+                  </div>
+                </div>
+
+                <ul class="info">
+                  <li>
+                    <strong class="song-name">
+                      {{ song.title }}
+                    </strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div ng-if="busy">
+                Loading songs
+              </div>
+
+              <div class="no-results" ng-if="youtube && youtube.length == 0">
+                No results
+              </div>
+
+            </section>
+          </section>
+          <section class="song-search-results-summary" ng-if="!busy && !youtubeSelected">
+            <section class="song-search-results-body">
+
+              <div class="song-search-result" ng-repeat="song in soundcloud | limitTo:20" ng-click="selectSong(song)">
+                <div class="song-thumbnail sm">
+                  <img ng-src="{{ song.thumbnail }}">
+                  <div class="song-duration">
+                    {{ song.duration | secondsToDateTime | date:'m:ss' }}
+                  </div>
+                </div>
+
+                <ul class="info">
+                  <li>
+                    <strong class="song-name">
+                      {{ song.title }}
+                    </strong>
+                  </li>
+                </ul>
+              </div>
+
+              <div ng-if="busy">
+                Loading songs
+              </div>
+
+              <div class="no-results" ng-if="soundcloud && soundcloud.length == 0">
+                No results
+              </div>
+
+            </section>
+          </section>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

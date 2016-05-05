@@ -134,7 +134,6 @@ def add_song(playlist_id):
   song = song_controller.add_song(playlist_id, title, url, source_id, thumbnail, source, duration)
   if song:
     # update count for number of songs in the playlist
-    playlist_controller.add_count(user_id, playlist_id)
     return jsonify({'song': song.serialize})
 
   abort(500)
@@ -171,7 +170,7 @@ def login():
 
   user = authentication.authenticate(username, password)
   if user:
-    return jsonify({'user': {'username': user.username}})
+    return jsonify({'user': {'username': user.username, 'id': user.id}})
 
   abort(500)
 
@@ -186,7 +185,7 @@ def signup():
   user = authentication.register(username, password, first_name, last_name)
   
   if user:
-    return jsonify({'user': {'username': user.username}})
+    return jsonify({'user': {'username': user.username, 'id': user.id}})
 
   abort(400)
 
