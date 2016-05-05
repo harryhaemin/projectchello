@@ -3,32 +3,38 @@
     <button class="pull-right btn btn-danger" id="close-modal" ng-click="$dismiss()">Close</button>
     <div>
       <h2 class="page-header">
-        Search songs
+        Search users
       </h2>
       <div id="search-container" class="ng-scope">  
-        <form role="form" id="search-input-form" class="ng-pristine ng-valid" ng-submit="searchSong()">
+        <form role="form" id="search-input-form" class="ng-pristine ng-valid" ng-submit="search()">
           <div class="col-md-7 col-sm-8 col-xs-9" style="padding-left: 0;">
             <input class="form-control ng-pristine ng-untouched ng-valid" id="search-query" type="text" ng-model="q" placeholder="Search...">
-          </div>
           <button type="submit" id="search-btn" class="btn btn-primary col-md-5 col-sm-4 col-xs-3">Search</button>
+          </div>
+          
         </form>
-        
         <div id="search-results"> 
-          <ul class="search-selector">
-            <li class="youtube col-md-6 col-sm-6 col-xs-6" ng-click="select('youtube')" ng-class="{active: youtubeSelected}">
-              Youtube
-            </li>
-            <li class="soundcloud col-md-6 col-sm-6 col-xs-6" ng-click="select('soundcloud')" ng-class="{active: !youtubeSelected}">
-              Soundcloud
-            </li>
-          </ul>
+              <div id="users">
+                <div class="query-string" ng-if="query">Showing results for {{query}}:</div>
+                <section class="users">
+                  <div user-item 
+                    data-user="user" 
+                    ng-repeat="user in users">
+                  </div>
+                  <div ng-if="users.length === 0">No user to display</div>
+                </section>
+              </div>
+        </div>
+        
+        <!-- <div id="search-results"> 
+
           <div ng-if="error && error.message" ng-class="{active: !youtubeSelected}">
             {{ error.message }}
           </div>
           <section class="song-search-results-summary" ng-if="!busy && youtubeSelected">
             <section class="song-search-results-body">
 
-              <div class="song-search-result" ng-repeat="song in youtube | limitTo:20" ng-click="setSong(song)">
+              <div class="song-search-result" ng-repeat="song in youtube | limitTo:20" ng-click="selectSong(song)">
                 <div class="song-thumbnail sm">
                   <img ng-src="{{ song.thumbnail }}">
                   <div class="song-duration">
@@ -58,7 +64,7 @@
           <section class="song-search-results-summary" ng-if="!busy && !youtubeSelected">
             <section class="song-search-results-body">
 
-              <div class="song-search-result" ng-repeat="song in soundcloud | limitTo:20" ng-click="setSong(song)">
+              <div class="song-search-result" ng-repeat="song in soundcloud | limitTo:20" ng-click="selectSong(song)">
                 <div class="song-thumbnail sm">
                   <img ng-src="{{ song.thumbnail }}">
                   <div class="song-duration">
@@ -85,7 +91,7 @@
 
             </section>
           </section>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

@@ -127,7 +127,7 @@ class PlaylistController():
 		return False
 
 	def verify_playlist_collaborator(self, user_id, playlist_id):
-		playlists = UserCollaborates.query.filter_by(id=playlist_id).all()
+		playlists = UserCollaborates.query.filter_by(playlist_id=playlist_id).all()
 		# if playlist is not found, return False
 		if len(playlists) == 0:
 			return False
@@ -136,6 +136,5 @@ class PlaylistController():
 		for p in playlists:
 			if p.user_id == user_id:
 				return True
-
 		# else, return False
 		return False

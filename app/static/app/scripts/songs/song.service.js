@@ -98,6 +98,11 @@ angular.module('mango')
 	      return deferred.promise;
 	    },
 	    getSongsForSelect : function (callback) {
+	      
+
+	     console.log("getSongsForSelect");
+
+
 	      var cb = callback || angular.noop,
 	          deferred = $q.defer();
 
