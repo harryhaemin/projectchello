@@ -1,0 +1,8 @@
+@media (min-width: 0px) {
+  .col-md-offset-2 {
+        margin-left: 0%;
+  }
+/*  .col-md-offset-8 {
+    margin-left: 66.66666666666666%;
+  }*/
+}
