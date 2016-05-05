@@ -190,18 +190,19 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
     };
 
     $scope.openModal = function() {
-	$modal.open({
-        templateUrl: 'app/views/playlists/add_modal.html',
-        controller: 'PlaylistModalController',
-        size: 'md',
-        scope: $scope
-      })
+		$modal.open({
+	        templateUrl: 'app/views/playlists/add_modal.html',
+	        controller: 'PlaylistModalController',
+	        size: 'md',
+	        scope: $scope
+	      })
       .result
-      .then(function (songs) {
-      	console.log(songs);
-      	$scope.addSongs(songs);
+      .then(function (song) {
+        $scope.song = song;
+        $scope.duration = $filter('secondsToDateTime')(song.duration);
+        $scope.duration = $filter('date')($scope.duration, 'm:ss');
       });
-		}
+	}
 
 
     // $scope.currentUrl = null;
@@ -226,10 +227,9 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 		// };
 	}
 ])
-.controller('PlaylistModalController', ['$scope', '$stateParams', '$modalInstance', 'Songs', '$state',
+.controller('PlaylistModalController', ['$scope', '$stateParams', '$modalInstance', 'SearchService', '$state',
  
   function($scope, $stateParams, $modalInstance, SearchService) {
-  	console.log("in playlist controller");
     $scope.q = $stateParams.q;
     $scope.type = $stateParams.type;
     $scope.youtubeSelected = true;
@@ -238,6 +238,7 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 
     $scope.youtube = null;
     $scope.soundcloud = null;
+    console.log("yoyoyoy");
 
     $scope.searchSong = function() {
       console.log("searching motherfucker!!!");
