@@ -40,7 +40,7 @@ def handle_invalid_usage(error):
   response.status_code = error.status_code
   return response
 
-# API endpoint for getting playlist for current user
+# API endpoint for getting playlists
 #TODO: implement keyword search
 @app.route('/api/playlists', methods=['GET'])
 @login_required
@@ -198,7 +198,6 @@ def logout():
   return '', 200
 
 # API endpoint for getting list of playlists for a user
-# TODO: implement fetch user
 @app.route('/api/users/<user_id>', methods=['GET'])
 @login_required
 def get_user(user_id):
@@ -209,11 +208,10 @@ def get_user(user_id):
   playlists = playlist_controller.get_playlists_for_user(user_id)
 
   # return the playlist as a JSON
-  playlists_json = playlists.serialize
+  playlists_json = [playlist.serialize for playlist in playlists]
   user_json['playlists'] = playlists_json
 
   return jsonify({'user': user_json})
-
 
 # get list of users route
 # TODO: implemenet get_users and get_users_by_keyword
@@ -225,4 +223,4 @@ def get_users():
     users = user_controller.get_users_by_keyword(q.lower())
   else:
     users = user_controller.get_users()
-  return jsonify({'users': users})
+  return jsonify({'users': [user.serialize for user in users]})

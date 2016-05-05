@@ -73,7 +73,13 @@ class UserController():
 	def __init__(self, session):
 		self.session = session
 
-	
+	def get_users(self):
+		users = User.query.all()
+		return users
+
+	def get_user(self, user_id):
+		user = User.query.filter_by(id=user_id).first()
+		return user
 
 
 @login_manager.user_loader

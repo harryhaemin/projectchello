@@ -1,4 +1,5 @@
 from app.models.models import Playlist
+from app.models.models import User
 from app.models.models import UserCollaborates
 from app.controllers.song_controller import SongController
 
@@ -36,7 +37,7 @@ class PlaylistController():
 		collaborator = UserCollaborates.query.filter_by(user_id=user_id).all()
 		playlists_id = [c.playlist_id for c in collaborator]
 
-		playlists = Playlist.query.filter_by(id.in_(playlists_id)).all()
+		playlists = Playlist.query.filter(User.id.in_(playlists_id)).all()
 		return playlists
 
 	def get_playlist(self, playlist_id):
