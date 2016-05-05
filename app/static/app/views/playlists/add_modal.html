@@ -29,7 +29,7 @@
           <section class="song-search-results-summary" ng-if="!busy && youtubeSelected">
             <section class="song-search-results-body">
 
-              <div class="song-search-result" ng-repeat="song in youtube | limitTo:20" ng-click="setSong(song)">
+              <div class="song-search-result" ng-repeat="song in youtube | limitTo:20" ng-click="selectSong(song)">
                 <div class="song-thumbnail sm">
                   <img ng-src="{{ song.thumbnail }}">
                   <div class="song-duration">
@@ -59,7 +59,7 @@
           <section class="song-search-results-summary" ng-if="!busy && !youtubeSelected">
             <section class="song-search-results-body">
 
-              <div class="song-search-result" ng-repeat="song in soundcloud | limitTo:20" ng-click="setSong(song)">
+              <div class="song-search-result" ng-repeat="song in soundcloud | limitTo:20" ng-click="selectSong(song)">
                 <div class="song-thumbnail sm">
                   <img ng-src="{{ song.thumbnail }}">
                   <div class="song-duration">

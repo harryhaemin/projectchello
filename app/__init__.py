@@ -117,7 +117,7 @@ def update_playlist(playlist_id):
 @app.route('/api/playlists/<playlist_id>/songs', methods=['POST'])
 @login_required
 def add_song(playlist_id):
-  song = request.json.get('song')
+  song = request.json.get('songs')
   title = song.get('title')
   url = song.get('url')
   source_id = song.get('source_id')

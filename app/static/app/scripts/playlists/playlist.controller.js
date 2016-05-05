@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mango').controller('PlaylistController', ['$scope', '$stateParams', '$location', 'Playlists', 'PlayerService', 'SearchService', 'Songs', '$timeout', '$rootScope', 'Auth', '$modal', '$state',
-	function($scope, $stateParams, $location, Playlists, PlayerService, SearchService, Songs, $timeout, $rootScope, Auth, $modal, $state) {
+angular.module('mango').controller('PlaylistController', ['$scope', '$stateParams', '$location', 'Playlists', 'PlayerService', 'SearchService', 'Songs', '$timeout', '$rootScope', 'Auth', '$modal', '$filter', '$state',
+	function($scope, $stateParams, $location, Playlists, PlayerService, SearchService, Songs, $timeout, $rootScope, Auth, $modal, $filter, $state) {
 		$scope.isPlaying = PlayerService.isPlaying;
 		$scope.isPaused = PlayerService.isPaused;
 		$scope.youtubeSelected = true;
@@ -197,10 +197,11 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 	        scope: $scope
 	      })
       .result
-      .then(function (song) {
-        $scope.song = song;
-        $scope.duration = $filter('secondsToDateTime')(song.duration);
-        $scope.duration = $filter('date')($scope.duration, 'm:ss');
+      .then(function (songs) {
+        $scope.songs = songs;
+        console.log( $scope.songs);
+        // $scope.duration = $filter('secondsToDateTime')(song.duration);
+        // $scope.duration = $filter('date')($scope.duration, 'm:ss');
       });
 	}
 
@@ -238,6 +239,7 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 
     $scope.youtube = null;
     $scope.soundcloud = null;
+    $scope.songs = [];
     console.log("yoyoyoy");
 
     $scope.searchSong = function() {
@@ -247,10 +249,15 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
       SearchService.searchYoutube($scope.q)
       .then(function(res) {
         $scope.youtube = res;
+        console.log(res);
+        $scope.songs = res;
+
       });
       SearchService.searchSoundcloud($scope.q)
       .then(function(res) {
         $scope.soundcloud = res;
+        console.log(res);
+        $scope.songs.push(res);
       });
     };
 
@@ -261,10 +268,13 @@ angular.module('mango').controller('PlaylistController', ['$scope', '$stateParam
 			else {
 				$scope.youtubeSelected = false;
 			}
-		};
+	};
 
-    $scope.setSong = function(song) {
-    	$modalInstance.close(song);
+    $scope.selectSong = function(song) {
+    	// $modalInstance.close($scope.select.song);
+    	console.log(song);
+    	$scope.addSongs(song);
+
     }
 
 
