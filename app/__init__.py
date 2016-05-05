@@ -144,8 +144,12 @@ def add_song(playlist_id):
 @app.route('/api/playlists/<playlist_id>/collaborators', methods=['POST'])
 @login_required
 def add_collaborator(playlist_id):
+  user = request.json.get('user')
+  if not playlist_controller.verify_playlist_collaborator(user, playlist_id):
+    collab = playlist_controller.add_collaborator(user, playlist_id)
+    return jsonify({'collaborator': user})
 
-  return ''
+  return jsonify(None)
 
 # API endpoint for deleting a song from the playlist
 @app.route('/api/playlists/<playlist_id>/songs/<song_id>', methods=['DELETE'])

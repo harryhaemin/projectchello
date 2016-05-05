@@ -69,6 +69,13 @@ class PlaylistController():
 		# return the created playlist
 		return playlist
 
+	def add_collaborator(self, user_id, playlist_id):
+		collab = UserCollaborates(user_id, playlist_id)
+		self.session.add(collab)
+		self.session.commit()
+
+		return collab
+		
 	def update_playlist(self, user_id, playlist_id, name):
 		# check if playlist with new name is already in the database
 		playlist = Playlist.query.filter_by(user_id=user_id, name=name).first()
