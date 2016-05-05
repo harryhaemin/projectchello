@@ -5,7 +5,7 @@
 	<section class="col-md-4 col-md-offset-2" ng-if="playlist" style="padding: 60px">
 		
 		<div class="thumbnail_wrapper" ng-if="playlist.songs[0].thumbnail">
-    		<img ng-src="{{ playlist.songs[0].thumbnail }}" style="height: 200px; width: 200px;"/>
+    		<img ng-src="{{ playlist.songs[0].thumbnail }}" style="height: 200px; width: 200px;" class="img-circle"/>
   		</div>
 
   		<div class="thumbnail_wrapper" ng-if="!playlist.songs[0].thumbnail">
