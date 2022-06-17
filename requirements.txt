@@ -38,7 +38,7 @@ Mako==1.0.1
 Markdown==2.6.6
 MarkupSafe==0.23
 newrelic==2.56.0.42
-numpy==1.10.1
+numpy==1.21.0
 oauth==1.0.1
 parse-rest==0.2.20141004
 passlib==1.6.5
